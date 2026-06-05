@@ -1,0 +1,9 @@
+{
+    "ApplicationSettings": {
+        "SSOURL": "https://uat.websso.saint-gobain.com/cas/?ticket=&service=",
+        "AUTH_URL": "https://localhost:44346/api/",
+        "APP_VERSION": "0.0.0",
+        "APP_ENV": "FEATURE",
+        "AUTHMODE":"WEBSSO"
+    }
+}

@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<EnableNETAnalyzers>false</EnableNETAnalyzers>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Controllers\ErrorController.cs" />
+		<Compile Remove="Controllers\ErrorLogController.cs" />
+		<Compile Remove="Controllers\SystemLogController.cs" />
+		<Compile Remove="Controllers\UserRightsController.cs" />
+		<Compile Remove="Control\ErrorControl.cs" />
+		<Compile Remove="Control\ErrorLogControl.cs" />
+		<Compile Remove="Control\JwtTokenHandler.cs" />
+		<Compile Remove="Control\SystemLogscontrol.cs" />
+		<Compile Remove="Control\UserRightsControl.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.6.10" />
+		<PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
+		<PackageReference Include="Npgsql" Version="9.0.2" />
+		<PackageReference Include="RestSharp" Version="112.1.0" />
+		<PackageReference Include="Sentry.Serilog" Version="3.41.2" />
+		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.3.0" />
+		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+		<PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+		<PackageReference Include="VaultSharp" Version="1.13.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="SG.Common.DAL.Postgresql">
+			<HintPath>References\SG.Common.DAL.Postgresql.dll</HintPath>
+		</Reference>
+		<Reference Include="SG.Common.Utility">
+			<HintPath>References\SG.Common.Utility.dll</HintPath>
+		</Reference>
+		<Reference Include="SGCrypto.NetCore">
+			<HintPath>References\SGCrypto.NetCore.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Logs\" />
+	</ItemGroup>
+
+</Project>

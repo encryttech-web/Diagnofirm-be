@@ -1,0 +1,107 @@
+<div class="flex flex-col md:flex-row gap-8">
+  <div class="md:w-1/2">
+    <div class="card">
+      <p-dialog header="Edit category" [(visible)]="editdisplaycategory" [breakpoints]="{ '960px': '75vw' }"
+        [style]="{ width: '55vw'}" [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+        <ng-template pTemplate="header">
+          <span>
+            <h5>Edit Category</h5>
+          </span>
+          <a class="close-button" (click)="close()">
+            <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+          </a>
+        </ng-template>
+
+        <!-- FORM START -->
+        <form #categoryForm="ngForm" (ngSubmit)="editbtn(categoryForm)">
+
+          <div class="card flex flex-col gap-4 cardflx">
+            <div class="flex flex-wrap items-start gap-6">
+
+              <div class="field">
+                <label for="categorycode">Category Code <span style="color: red;">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <span>{{ categorycode }}</span>
+                </div>
+                <!-- <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText id="categorycode" type="text" [(ngModel)]="categorycode" name="categorycode" required autocomplete="off" maxlength="10"/>
+                  <small class="p-error" *ngIf="categoryForm.submitted && !categorycode">category Code is required</small>
+                </div> -->
+              </div>
+
+              <div class="field">
+                <label for="categoryname">Category Name <span style="color: red;">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText id="categoryname" type="text" [(ngModel)]="categoryname" name="categoryname"
+                    required autocomplete="off" maxlength="50" />
+                  <small class="p-error" *ngIf="categoryForm.submitted && !categoryname">category Name is
+                    required</small>
+                </div>
+              </div>
+
+               <div class="field">
+                <label for="categorydescription">Category Description <span style="color: red;">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText id="categorydescription" type="text" [(ngModel)]="categorydescription"
+                    name="categorydescription" required autocomplete="off" maxlength="50" />
+                  <!-- <p [innerHTML]="categorydescription"></p> -->
+                  <small class="p-error" *ngIf="categoryForm.submitted && !categorydescription">Incharge Name is
+                    required</small>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="status">Status</label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <p-toggleswitch [(ngModel)]="checked" name="checked"></p-toggleswitch>
+                </div>
+              </div>
+
+              <!-- <div class="field">
+                <label for="categoryorder">Category Order <span style="color: red;">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText id="categoryorder" type="text" [(ngModel)]="categoryorder" name="categoryorder"
+                    required autocomplete="off" maxlength="50" />
+                  <small class="p-error" *ngIf="categoryForm.submitted && !categoryorder">Location is required</small>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+
+          <!-- <div class="card flex flex-col gap-4 cardflx">
+            <div class="flex flex-wrap items-start gap-6">
+
+              <div class="field">
+                <label for="categorydescription">Category Description <span style="color: red;">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText id="categorydescription" type="text" [(ngModel)]="categorydescription"
+                    name="categorydescription" required autocomplete="off" maxlength="50" />
+                  <small class="p-error" *ngIf="categoryForm.submitted && !categorydescription">Incharge Name is
+                    required</small>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="status">Status</label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <p-toggleswitch [(ngModel)]="checked" name="checked"></p-toggleswitch>
+                </div>
+              </div>
+
+            </div>
+          </div> -->
+
+          <!-- Footer -->
+          <div class="space-x-4 footercls">
+            <p-button label="Save" type="submit" [disabled]="!categoryForm.valid"></p-button>
+            <p-button label="Clear" (click)="clear()" class="custom-red-button"></p-button>
+          </div>
+
+        </form>
+        <!-- FORM END -->
+      </p-dialog>
+    </div>
+  </div>
+</div>

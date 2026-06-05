@@ -1,0 +1,110 @@
+.btncls {
+  float: left;
+}
+
+.cardcls {
+  // margin-top: -25px;
+}
+
+.cardflx {
+  padding: 0px !important;
+}
+
+.dropcls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.textcls {
+  padding-top: 5px;
+}
+
+.datecls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.my-toggle {
+  width: 100px;
+  height: 50px;
+}
+
+.p-datatable-frozen-tbody {
+  font-weight: bold;
+}
+
+.p-datatable-scrollable .p-frozen-column {
+  font-weight: bold;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-bottom: -8px;
+}
+
+.clear-button {
+}
+
+.export-btn {
+  background-color: transparent !important;
+  color: #28a745 !important;
+  border: 0.1px solid #28a745 !important;
+  padding: 6px 10px;
+}
+
+html,
+body {
+  overflow-x: hidden !important;
+  width: 100vw;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+footer {
+  max-width: 100%;
+  display: block;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+th[frozen='true'],
+td[frozen='true'] {
+  z-index: 190;
+}
+
+.divcls {
+  width: auto !important;
+  height: auto !important;
+  overflow: hidden;
+}

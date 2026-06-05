@@ -1,0 +1,282 @@
+<div class="flex flex-col md:flex-row gap-8">
+
+    <div class="md:w-1/2">
+
+        <div class="card">
+
+            <p-dialog header="Edit FAQ" [(visible)]="editdisplayfaq" [breakpoints]="{ '960px': '75vw' }"
+                [style]="{ width: '55vw' }" [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+                <!-- HEADER -->
+                <ng-template pTemplate="header">
+
+                    <span>
+                        <h5>Edit FAQ</h5>
+                    </span>
+
+                    <a class="close-button" (click)="close()">
+
+                        <i class="pi pi-times iconcls" style="cursor: pointer;">
+
+                        </i>
+
+                    </a>
+
+                </ng-template>
+
+                <!-- FORM START -->
+                <form #faqForm="ngForm" (ngSubmit)="editbtn(faqForm)">
+
+                    <!-- ================================= -->
+                    <!-- BLOCK 1 -->
+                    <!-- ================================= -->
+                    <div class="card flex flex-col gap-4 cardflx">
+
+                        <div class="flex flex-wrap items-start gap-6">
+
+                            <!-- FAQ CODE -->
+                            <!-- <div class="field">
+
+                                <label>
+                                    FAQ Code
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                <div class="textcls">
+
+                                    <span>{{ faq_code }}</span>
+
+                                </div>
+
+                            </div> -->
+
+                            <!-- PRODUCT DROPDOWN -->
+                            <div class="field">
+
+                                <label>Product</label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <!-- PRODUCT -->
+                                    <p-select [options]="productList" optionLabel="productname" optionValue="id"
+                                        [(ngModel)]="prod_id" name="prod_id" placeholder="Select Product"
+                                        [filter]="true" filterBy="productname" [showClear]="true">
+                                    </p-select>
+
+                                    <!-- <p-select
+                                        [options]="productList"
+                                        optionLabel="productname"
+                                        optionValue="id"
+                                        [(ngModel)]="prod_id"
+                                        name="prod_id"
+                                        placeholder="Select Product">
+
+                                    </p-select> -->
+
+                                </div>
+
+                            </div>
+
+                            <!-- SUB CATEGORY DROPDOWN -->
+                            <div class="field">
+
+                                <label>Sub Category</label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <!-- <p-select [options]="subcategoryList" optionLabel="subcategoryname" optionValue="id"
+                                        [(ngModel)]="subcategory_id" name="subcategory_id"
+                                        placeholder="Select Sub Category">
+
+                                    </p-select> -->
+
+                                    <!-- SUB CATEGORY -->
+                                    <p-select [options]="subcategoryList" optionLabel="subcategoryname" optionValue="id"
+                                        [(ngModel)]="subcategory_id" name="subcategory_id"
+                                        placeholder="Select Sub Category" [filter]="true" filterBy="subcategoryname"
+                                        [showClear]="true">
+                                    </p-select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- PACKAGE DROPDOWN -->
+                            <div class="field">
+
+                                <label>Package</label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <!-- <p-select [options]="packageList" optionLabel="packagename" optionValue="id"
+                                        [(ngModel)]="packg_id" name="packg_id" placeholder="Select Package">
+
+                                    </p-select> -->
+
+                                    <!-- PACKAGE -->
+                                    <p-select [options]="packageList" optionLabel="packagename" optionValue="id"
+                                        [(ngModel)]="packg_id" name="packg_id" placeholder="Select Package"
+                                        [filter]="true" filterBy="packagename" [showClear]="true">
+                                    </p-select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- QUESTION -->
+                            <div class="field">
+
+                                <label>
+                                    Question
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <input pInputText type="text" [(ngModel)]="faq_ques" name="faq_ques" required />
+
+                                </div>
+
+                                <div *ngIf="faqForm.submitted && !faq_ques" class="p-error">
+
+                                    Question is required
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================================= -->
+                    <!-- BLOCK 2 -->
+                    <!-- ================================= -->
+                    <div class="card flex flex-col gap-4 cardflx">
+
+                        <div class="flex flex-wrap items-start gap-6">
+
+                            <!-- FAQ NAME -->
+                            <!-- <div class="field">
+
+                                <label>
+                                    FAQ Name
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <input pInputText type="text" [(ngModel)]="faq_name" name="faq_name" required
+                                        maxlength="50" />
+
+                                </div>
+
+                                <div *ngIf="faqForm.submitted && !faq_name" class="p-error">
+
+                                    FAQ Name is required
+
+                                </div>
+
+                            </div> -->
+
+                            <!-- FAQ DESCRIPTION -->
+                            <!-- <div class="field">
+
+                                <label>Description</label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <input pInputText type="text" [(ngModel)]="faq_desc" name="faq_desc"
+                                        maxlength="200" />
+
+                                </div>
+
+                            </div> -->
+
+
+
+                            <!-- ANSWER -->
+                            <div class="field">
+
+                                <label>
+                                    Answer
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <textarea pInputText rows="4" [(ngModel)]="faq_ans" name="faq_ans" required>
+
+                                    </textarea>
+
+                                </div>
+
+                                <div *ngIf="faqForm.submitted && !faq_ans" class="p-error">
+
+                                    Answer is required
+
+                                </div>
+
+                            </div>
+
+                            <!-- Home Check -->
+                            <div class="field">
+
+                                <label for="status">
+                                    Home
+                                </label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <p-toggleswitch [(ngModel)]="faq_homecheck" name="faq_homecheck">
+                                    </p-toggleswitch>
+
+                                </div>
+
+                            </div>
+
+                            <!-- STATUS -->
+                            <div class="field">
+
+                                <label for="status">
+                                    Status
+                                </label>
+
+                                <div class="flex flex-wrap gap-2 textcls">
+
+                                    <p-toggleswitch [(ngModel)]="checked" name="checked">
+
+                                    </p-toggleswitch>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================================= -->
+                    <!-- FOOTER -->
+                    <!-- ================================= -->
+                    <div class="space-x-4 footercls">
+
+                        <p-button label="Save" type="submit" [disabled]="!faqForm.valid">
+
+                        </p-button>
+
+                        <p-button label="Clear" (click)="clear()" class="custom-red-button">
+
+                        </p-button>
+
+                    </div>
+
+                </form>
+
+            </p-dialog>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,121 @@
+<p-dialog header="Add Feedback"
+  [(visible)]="display"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '55vw'}"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false">
+
+  <!-- HEADER -->
+  <ng-template pTemplate="header">
+    <span>
+      <h5>Add Feedback</h5>
+    </span>
+
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM START -->
+  <form #feedbackForm="ngForm" (ngSubmit)="addbtn(feedbackForm)" novalidate>
+
+    <!-- FIRST BLOCK -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- USER NAME -->
+        <div class="field">
+          <label>User Name <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text"
+              [(ngModel)]="user_name"
+              name="user_name"
+              required
+              maxlength="50" />
+          </div>
+
+          <div *ngIf="feedbackForm.submitted && !user_name" class="p-error">
+            User Name is required.
+          </div>
+        </div>
+
+        <!-- USER EMAIL -->
+        <div class="field">
+          <label>User Email <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="email"
+              [(ngModel)]="user_email"
+              name="user_email"
+              required
+              maxlength="50" />
+          </div>
+
+          <div *ngIf="feedbackForm.submitted && !user_email" class="p-error">
+            Email is required.
+          </div>
+        </div>
+
+         <!-- USER ROLE -->
+        <div class="field">
+          <label>User Role</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text"
+              [(ngModel)]="user_role"
+              name="user_role"
+              maxlength="50" />
+          </div>
+        </div>
+
+        <!-- RATING -->
+        <div class="field">
+          <label>Rating</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text"
+              [(ngModel)]="start_rating"
+              name="start_rating"
+              maxlength="5" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECOND BLOCK -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        
+
+         <!-- DESCRIPTION -->
+        <div class="field widthcls">
+          <label>Description</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputTextarea
+              rows="4"
+              [(ngModel)]="fedbck_desc"
+              name="fedbck_desc"
+              >
+            </textarea>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save"
+        type="submit"
+        [disabled]="!feedbackForm.valid">
+      </p-button>
+
+      <p-button label="Clear"
+        (click)="clear()"
+        class="custom-red-button">
+      </p-button>
+    </div>
+
+  </form>
+</p-dialog>

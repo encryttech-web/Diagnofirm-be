@@ -1,0 +1,62 @@
+.btncls {
+  float: right;
+}
+
+.cardcls {
+  margin-top: -25px;
+}
+
+.cardflx {
+  padding: 0px !important;
+}
+
+.dropcls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.textcls {
+  padding-top: 5px;
+}
+
+.datecls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.my-toggle {
+  width: 100px;
+  height: 50px;
+}
+
+.footercls {
+  float: right;
+}
+
+.custom-red-button ::ng-deep .p-button {
+  background-color: red !important;
+  border-color: red !important;
+  color: white !important;
+}
+
+.iconcls {
+  padding-left: 500px;
+  font-size: medium;
+}
+
+.atagcls {
+  margin-left: 2px;
+}
+
+.valcls {
+  cursor: pointer;
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.btnimgcls {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+}

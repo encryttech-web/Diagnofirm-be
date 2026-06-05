@@ -1,0 +1,97 @@
+<p-toast position="top-right"></p-toast>
+
+<div class="flex flex-col divcls">
+  <div class="card cardcls file-container">
+
+    <!-- Table Wrapper -->
+    <div class="table-container">
+
+      <p-table #dt1 [value]="getcontactlist" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        [showGridlines]="true" [paginator]="true" scrollable="true" scrollHeight="70vh" frozenWidth="12rem"
+        [globalFilterFields]="['cont_name', 'cont_type', 'cont_city', 'cont_state', 'cont_country', 'cont_phno', 'cont_email']"
+        (onFilter)="onFilter($event)" (onSort)="onSort($event)">
+
+        <ng-template #caption>
+          <div class="table-toolbar">
+            <div class="search-container">
+              <button pButton label="Clear" class="p-button-outlined clear-button"
+                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+              <button pButton icon="pi pi-file-excel" class="export-btn"
+                (click)="exportToExcel()"></button>
+
+              <p-iconfield iconPosition="left">
+                <p-inputicon>
+                  <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" [(ngModel)]="globalFilter"
+                  (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
+                <p-inputicon (click)="clearFilter(dt1)" *ngIf="filterApplied">
+                  <i class="pi pi-times"></i>
+                </p-inputicon>
+              </p-iconfield>
+
+              <p-button label="Add" class="btncls" (onClick)="openAddContactDialog()"></p-button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #header>
+          <tr>
+            <th *ngFor="let field of userFields" pSortableColumn="{{field}}" style="min-width: 150px;">
+              {{ userUiFields[userFields.indexOf(field)] }}
+              <p-sortIcon [field]="field"></p-sortIcon>
+              <p-columnFilter [field]="field" matchMode="contains" type="text" display="menu"
+                [showOperator]="false" [showMatchModes]="false" [showAddButton]="false"
+                placeholder="Search by {{userUiFields[userFields.indexOf(field)]}}">
+              </p-columnFilter>
+            </th>
+
+            <!-- Frozen Action Column -->
+            <th frozen="true" style="width: 10rem; background: #f4f4f4; position: sticky; right: 0;">
+              <div class="flex justify-center items-center">Action</div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-contact>
+          <tr>
+            <td *ngFor="let field of userFields" style="min-width: 150px;">
+              {{ contact[field] }}
+            </td>
+
+            <!-- Frozen Action Column -->
+            <td frozen="true" style="width: 10rem; position: sticky; right: 0; background: white;">
+              <p-button severity="success" icon="pi pi-pen-to-square"
+                (onClick)="editscreen(contact)" /> &nbsp;
+              <p-button severity="danger" icon="pi pi-trash"
+                (onClick)="deleteaction(contact.id)" />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="8">No contacts found.</td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+          <tr>
+            <td colspan="8">Loading contact data. Please wait.</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+
+      <div *ngIf="addenable">
+        <app-addcontact [display]="display" (dataReloaded)="onDataReloaded()"></app-addcontact>
+      </div>
+
+      <div *ngIf="editenable">
+        <app-editcontact [editdisplaycontact]="editdisplaycontact" [contactdata]="contactdata"
+          (editdisplayChange)="backtomainChange($event)"></app-editcontact>
+      </div>
+
+    </div>
+  </div>
+</div>

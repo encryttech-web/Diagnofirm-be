@@ -1,0 +1,236 @@
+<p-dialog
+    header="Edit Newsletter"
+    [(visible)]="editdisplaynewsletter"
+    [breakpoints]="{ '960px': '75vw' }"
+    [style]="{ width: '55vw' }"
+    [modal]="true"
+    [closable]="false"
+    [closeOnEscape]="false">
+
+    <!-- HEADER -->
+
+    <ng-template pTemplate="header">
+
+        <span>
+            <h5>Edit Newsletter</h5>
+        </span>
+
+        <a class="close-button"
+           (click)="close()">
+
+            <i class="pi pi-times iconcls"
+               style="cursor:pointer;">
+            </i>
+
+        </a>
+
+    </ng-template>
+
+
+    <!-- FORM -->
+
+    <form
+        #newsletterForm="ngForm"
+        (ngSubmit)="editbtn(newsletterForm)"
+        novalidate>
+
+
+        <div class="card flex flex-col gap-4 cardflx">
+
+            <div class="flex flex-wrap items-start gap-6">
+
+
+                <!-- VERSION -->
+
+                <div class="field">
+
+                    <label>
+                        Version No
+                        <span class="text-red-500">*</span>
+                    </label>
+
+                    <div class="flex flex-wrap gap-2 textcls">
+
+                        <input
+                            pInputText
+                            type="text"
+                            [(ngModel)]="version_no"
+                            name="version_no"
+                            required />
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="field">
+
+                    <label>
+                        Newsletter Date
+                        <span class="text-red-500">*</span>
+                    </label>
+
+                    <div class="flex flex-wrap gap-2 textcls">
+
+                        <input
+                            pInputText
+                            type="date"
+                            [(ngModel)]="letter_date"
+                            name="letter_date"
+                            required />
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="field">
+
+                    <div *ngIf="imageDeleteEnable">
+
+                        <div class="row">
+
+                            <div class="col-4">
+
+                                <label>
+                                    Image
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                            </div>
+
+                            <div class="col-8">
+
+                                <a (click)="imageviwe()">
+
+                                    {{ letter_imgname }}
+
+                                    <i
+                                        class="pi pi-times"
+                                        (click)="removeImage($event)">
+                                    </i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div *ngIf="!imageDeleteEnable">
+
+                        <app-imageupload
+                            (eventName)="onImageUpload($event)">
+                        </app-imageupload>
+
+                    </div>
+
+
+                    <div *ngIf="visibleImageView">
+
+                        <app-imageview
+                            [visible]="visibleImageView"
+                            [images]="images">
+                        </app-imageview>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILE -->
+
+                <div class="field">
+
+                    <div *ngIf="fileDeleteEnable">
+
+                        <div class="row">
+
+                            <div class="col-4">
+
+                                <label>
+                                    File
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                            </div>
+
+                            <div class="col-8">
+
+                                <a (click)="viewFile()">
+
+                                    {{ letter_filename }}
+
+                                    <i
+                                        class="pi pi-times"
+                                        (click)="removeDocument($event)">
+                                    </i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div *ngIf="!fileDeleteEnable">
+
+                        <app-fileupload
+                            (eventName)="onDocumentUpload($event)">
+                        </app-fileupload>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="field">
+
+                    <label>Status</label>
+
+                    <div class="flex flex-wrap gap-2 textcls">
+
+                        <p-toggleswitch
+                            [(ngModel)]="checked"
+                            name="checked">
+                        </p-toggleswitch>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="space-x-4 footercls">
+
+            <p-button
+                label="Save"
+                type="submit">
+            </p-button>
+
+            <p-button
+                label="Clear"
+                (click)="clear()"
+                class="custom-red-button">
+            </p-button>
+
+        </div>
+
+    </form>
+
+</p-dialog>

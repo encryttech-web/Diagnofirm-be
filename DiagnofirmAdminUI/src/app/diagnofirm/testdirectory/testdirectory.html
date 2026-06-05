@@ -1,0 +1,166 @@
+<p-toast position="top-right"></p-toast>
+
+<div class="flex flex-col divcls">
+  <div class="card cardcls file-container">
+
+    <div class="table-container">
+
+      <p-table #dt1
+        [value]="gettestdirectoryist"
+        dataKey="id"
+        [rows]="10"
+        [loading]="loading"
+        [rowHover]="true"
+        [showGridlines]="true"
+        [paginator]="true"
+        scrollable="true"
+        scrollHeight="70vh"
+        frozenWidth="12rem"
+        [globalFilterFields]="userFields"
+        (onFilter)="onFilter($event)"
+        (onSort)="onSort($event)">
+
+        <!-- CAPTION -->
+        <ng-template #caption>
+          <div class="table-toolbar">
+            <div class="search-container">
+
+              <button pButton
+                label="Clear"
+                class="p-button-outlined clear-button"
+                icon="pi pi-filter-slash"
+                (click)="clear(dt1)">
+              </button>
+
+              <button pButton
+                icon="pi pi-file-excel"
+                class="export-btn"
+                (click)="exportToExcel()">
+              </button>
+
+              <p-iconfield iconPosition="left">
+                <p-inputicon>
+                  <i class="pi pi-search"></i>
+                </p-inputicon>
+
+                <input pInputText
+                  type="text"
+                  [(ngModel)]="globalFilter"
+                  (input)="onGlobalFilter(dt1, $event)"
+                  placeholder="Search keyword" />
+
+                <p-inputicon (click)="clearFilter(dt1)" *ngIf="filterApplied">
+                  <i class="pi pi-times"></i>
+                </p-inputicon>
+              </p-iconfield>
+
+              <p-button
+                label="Add"
+                class="btncls"
+                (onClick)="openAddDialog()">
+              </p-button>
+
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- HEADER (EXACT CATEGORY STYLE YOU WANTED) -->
+        <ng-template #header>
+          <tr>
+
+            <th *ngFor="let field of userFields"
+              pSortableColumn="{{field}}"
+              style="min-width: 150px;">
+
+              {{ userUiFields[userFields.indexOf(field)] }}
+
+              <p-sortIcon [field]="field"></p-sortIcon>
+
+              <p-columnFilter
+                [field]="field"
+                matchMode="contains"
+                type="text"
+                display="menu"
+                [showOperator]="false"
+                [showMatchModes]="false"
+                [showAddButton]="false"
+                placeholder="Search by {{userUiFields[userFields.indexOf(field)]}}">
+              </p-columnFilter>
+
+            </th>
+
+            <!-- ACTION COLUMN -->
+            <th frozen="true"
+              style="width: 10rem; background:#f4f4f4; position:sticky; right:0;">
+              Action
+            </th>
+
+          </tr>
+        </ng-template>
+
+        <!-- BODY (IMPORTANT FIX: use row NOT array index) -->
+        <ng-template #body let-row>
+          <tr>
+
+            <td *ngFor="let field of userFields"
+              style="min-width: 150px;">
+              {{ row[field] }}
+            </td>
+
+            <!-- ACTION -->
+            <td frozen="true"
+              style="width: 10rem; position:sticky; right:0; background:white;">
+
+              <p-button
+                severity="success"
+                icon="pi pi-pen-to-square"
+                (onClick)="editscreen(row)">
+              </p-button>
+
+              &nbsp;
+
+              <p-button
+                severity="danger"
+                icon="pi pi-trash"
+                (onClick)="deleteaction(row.id)">
+              </p-button>
+
+            </td>
+
+          </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="9">No test directories found.</td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+          <tr>
+            <td colspan="9">Loading test directory data. Please wait.</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+
+      <!-- ADD -->
+      <div *ngIf="addenable">
+        <app-addtestdirectory
+          [display]="display"
+          (dataReloaded)="onDataReloaded()">
+        </app-addtestdirectory>
+      </div>
+
+      <!-- EDIT -->
+      <div *ngIf="editenable">
+        <app-edittestdirectory
+          [editdisplaytestdirectory]="editdisplaytestdirectory"
+          [testdirectorydata]="testdirectorydata"
+          (editdisplayChange)="backtomainChange($event)">
+        </app-edittestdirectory>
+      </div>
+
+    </div>
+  </div>
+</div>

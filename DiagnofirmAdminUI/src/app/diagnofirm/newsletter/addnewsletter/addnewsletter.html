@@ -1,0 +1,85 @@
+<p-dialog header="Add Newsletter" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '55vw' }"
+  [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+  <!-- HEADER -->
+  <ng-template pTemplate="header">
+    <span>
+      <h5>Add Newsletter</h5>
+    </span>
+
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM -->
+  <form #newsletterForm="ngForm" (ngSubmit)="addbtn(newsletterForm)" novalidate>
+
+    <!-- BLOCK 1 -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- VERSION -->
+        <div class="field">
+          <label>Version No <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="version_no" name="version_no" required />
+          </div>
+
+          <div *ngIf="newsletterForm.submitted && !version_no" class="p-error">
+            Version is required
+          </div>
+        </div>
+
+        <!-- DATE -->
+        <div class="field">
+          <label>Newsletter Date <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="date" [(ngModel)]="letter_date" name="letter_date" required />
+          </div>
+
+          <div *ngIf="newsletterForm.submitted && !letter_date" class="p-error">
+            Date is required
+          </div>
+        </div>
+
+        <!-- IMAGE UPLOAD -->
+        <div class="field">
+          <label>Newsletter Image <span class="text-red-500">*</span></label>
+
+          <app-imageupload (eventName)="someMethod($event)">
+          </app-imageupload>
+
+          <!-- <div *ngIf="newsletterForm.submitted && !letter_image" class="p-error">
+            Image is required
+          </div> -->
+        </div>
+
+        <!-- FILE UPLOAD -->
+        <div class="field">
+          <label>Newsletter File <span class="text-red-500">*</span></label>
+
+          <app-fileupload (eventName)="onFileUpload($event)">
+        </app-fileupload>
+
+          <!-- <div *ngIf="newsletterForm.submitted && !letter_file" class="p-error">
+            File is required
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save" type="submit" [disabled]="!newsletterForm.valid">
+      </p-button>
+
+      <p-button label="Clear" (click)="clear()" class="custom-red-button">
+      </p-button>
+    </div>
+
+  </form>
+
+</p-dialog>

@@ -1,0 +1,144 @@
+<p-dialog header="Add subcategory" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '55vw'}"
+  [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+  <ng-template pTemplate="header">
+    <span>
+      <h5>Add Subcategory</h5>
+    </span>
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM START -->
+  <form #subcategoryForm="ngForm" (ngSubmit)="addbtn(subcategoryForm)" novalidate>
+
+    <!-- First Block -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+
+        <div class="field">
+          <label for="subcategorycode">
+            Subcategory Code <span class="text-red-500">*</span>
+          </label>
+
+          <!-- <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="subcategorycode" type="text" [(ngModel)]="subcategorycode" name="subcategorycode"
+              readonly />
+          </div> -->
+          <div class="flex flex-wrap gap-2 textcls">
+            <span>{{ subcategorycode }}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="category">Category <span class="text-red-500">*</span></label>
+
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-select [options]="getcategoryist" [(ngModel)]="category" optionLabel="categoryname" optionValue="id"
+              placeholder="Select Category" name="category">
+            </p-select>
+          </div>
+
+          <div *ngIf="subcategoryForm.submitted && !category" class="p-error">
+            Category is required.
+          </div>
+        </div>
+
+        <!-- <div class="field">
+          <label for="subcategorycode">Subcategory Code <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="subcategorycode" type="text" [(ngModel)]="subcategorycode" name="subcategorycode"
+              required autocomplete="off" maxlength="10" />
+          </div>
+          <div *ngIf="subcategoryForm.submitted && !subcategorycode" class="p-error">Subcategory Code is required.</div>
+        </div> -->
+
+        <div class="field">
+          <label for="subcategoryname">Subcategory Name <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="subcategoryname" type="text" [(ngModel)]="subcategoryname" name="subcategoryname"
+              required autocomplete="off" maxlength="50" />
+          </div>
+          <div *ngIf="subcategoryForm.submitted && !subcategoryname" class="p-error">Subcategory Name is required.</div>
+        </div>
+
+        <div class="field">
+          <label for="subcategorydescription">Subcategory Description <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <!-- <input pInputText id="subcategorydescription" type="text" [(ngModel)]="subcategorydescription"
+              name="subcategorydescription" required autocomplete="off" maxlength="50" /> -->
+
+            <textarea pInputText rows="4" [(ngModel)]="subcategorydescription" name="subcategorydescription" required>
+
+                                    </textarea>
+          </div>
+          <div *ngIf="subcategoryForm.submitted && !subcategorydescription" class="p-error">Subcategory description is
+            required.</div>
+        </div>
+
+        <!-- <div class="field">
+          <label for="subcategoryorder">Subcategory Order <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="subcategoryorder" type="text" [(ngModel)]="subcategoryorder" name="subcategoryorder"
+              required autocomplete="off" maxlength="50" />
+          </div>
+          <div *ngIf="subcategoryForm.submitted && !subcategoryorder" class="p-error">Subcategory order is required.
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+
+    <!-- Second Block -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <div class="field">
+          <label for="subcategoryorder">Subcategory Content <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputText rows="4" [(ngModel)]="subcategoryorder" name="subcategoryorder" required>
+                                    </textarea>
+          </div>
+          <div *ngIf="subcategoryForm.submitted && !subcategoryorder" class="p-error">Subcategory content is
+            required.</div>
+        </div>
+
+        <div class="field">
+          <label>Image <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <app-imageupload (eventName)="someMethod($event)" [testdata]="testdata">
+            </app-imageupload>
+          </div>
+
+        </div>
+
+        <!-- <div class="field">
+          <div class="field">
+            <label>Upload Image <span class="text-red-500">*</span></label>
+
+            <p-fileUpload name="image" accept="image/*" [customUpload]="true" (uploadHandler)="onImageSelect($event)"
+              [auto]="true" chooseLabel="Browse Image" maxFileSize="1000000">
+            </p-fileUpload>
+
+            <div *ngIf="subcategoryForm.submitted && !imageFile" class="p-error">
+              Image is required.
+            </div>
+          
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save" type="submit" [disabled]="!subcategoryForm.valid"></p-button>
+      <p-button label="Clear" (click)="clear()" class="custom-red-button" />
+    </div>
+  </form>
+
+  <!-- FORM END -->
+
+</p-dialog>

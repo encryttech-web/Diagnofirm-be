@@ -1,0 +1,513 @@
+// ─── Existing base styles ────────────────────────────────────────────────────
+
+.btncls { float: right; }
+
+.cardcls { margin-top: -25px; }
+
+.cardflx { padding: 0px !important; }
+
+.dropcls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.textcls { padding-top: 5px; }
+
+.datecls {
+  min-width: 197px;
+  max-width: 197px;
+}
+
+.my-toggle {
+  width: 100px;
+  height: 50px;
+}
+
+.footercls { float: right; }
+
+.custom-red-button ::ng-deep .p-button {
+  background-color: red !important;
+  border-color: red !important;
+  color: white !important;
+}
+
+.iconcls {
+  padding-left: 530px;
+  font-size: medium;
+}
+
+// ─── Design tokens ───────────────────────────────────────────────────────────
+
+$tpb-primary:        #2563eb;
+$tpb-primary-light:  #eff6ff;
+$tpb-primary-mid:    #bfdbfe;
+$tpb-accent:         #0ea5e9;
+$tpb-success:        #16a34a;
+$tpb-danger:         #dc2626;
+$tpb-danger-light:   #fef2f2;
+$tpb-border:         #e2e8f0;
+$tpb-border-focus:   #93c5fd;
+$tpb-bg-card:        #f8fafc;
+$tpb-bg-subtest:     #f0f9ff;
+$tpb-text-main:      #1e293b;
+$tpb-text-muted:     #64748b;
+$tpb-text-faint:     #94a3b8;
+$tpb-radius:         10px;
+$tpb-shadow:         0 1px 4px rgba(0, 0, 0, 0.07), 0 2px 10px rgba(0, 0, 0, 0.05);
+$tpb-shadow-hover:   0 4px 16px rgba(37, 99, 235, 0.12);
+
+// ─── Wrapper ─────────────────────────────────────────────────────────────────
+
+.tpb-wrapper {
+  padding: 20px !important;
+  border: 1px solid $tpb-border;
+  border-radius: $tpb-radius;
+  background: #fff;
+}
+
+// ─── Section header ──────────────────────────────────────────────────────────
+
+.tpb-section-header {
+  margin-bottom: 18px;
+}
+
+.tpb-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: $tpb-text-main;
+  margin-bottom: 4px;
+}
+
+.tpb-section-icon {
+  color: $tpb-primary;
+  font-size: 16px;
+}
+
+.tpb-required {
+  color: $tpb-danger;
+  margin-left: 2px;
+}
+
+.tpb-section-hint {
+  font-size: 12.5px;
+  color: $tpb-text-muted;
+  margin: 0;
+}
+
+// ─── Radio toggle cards ──────────────────────────────────────────────────────
+
+.tpb-format-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tpb-radio-card {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 2px solid $tpb-border;
+  border-radius: $tpb-radius;
+  background: $tpb-bg-card;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+
+  // Hide native radio
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+
+  &:hover {
+    border-color: $tpb-primary-mid;
+    background: $tpb-primary-light;
+    box-shadow: $tpb-shadow-hover;
+  }
+
+  &--active {
+    border-color: $tpb-primary;
+    background: $tpb-primary-light;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+
+    .tpb-radio-icon {
+      background: $tpb-primary;
+      color: #fff;
+    }
+
+    .tpb-radio-check {
+      opacity: 1;
+      color: $tpb-primary;
+    }
+
+    strong {
+      color: $tpb-primary;
+    }
+  }
+}
+
+.tpb-radio-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: $tpb-primary-mid;
+  color: $tpb-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: background 0.18s, color 0.18s;
+}
+
+.tpb-radio-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-size: 13.5px;
+    color: $tpb-text-main;
+    transition: color 0.18s;
+  }
+
+  small {
+    font-size: 11.5px;
+    color: $tpb-text-muted;
+    margin-top: 2px;
+  }
+}
+
+.tpb-radio-check {
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.18s;
+  flex-shrink: 0;
+}
+
+// ─── Body ────────────────────────────────────────────────────────────────────
+
+.tpb-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// ─── Shared input ────────────────────────────────────────────────────────────
+
+.tpb-input {
+  width: 100%;
+  border: 1.5px solid $tpb-border !important;
+  border-radius: 7px !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  color: $tpb-text-main !important;
+  background: #fff !important;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+
+  &:focus {
+    border-color: $tpb-border-focus !important;
+    box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35) !important;
+  }
+
+  &::placeholder {
+    color: $tpb-text-faint;
+  }
+
+  &--icon  { max-width: 120px; flex-shrink: 0; }
+  &--title { flex: 1; }
+  &--subtest { flex: 1; }
+  &--listitem { flex: 1; }
+}
+
+// ─── Category card ───────────────────────────────────────────────────────────
+
+.tpb-card {
+  border: 1.5px solid $tpb-border;
+  border-radius: $tpb-radius;
+  background: $tpb-bg-card;
+  overflow: hidden;
+  box-shadow: $tpb-shadow;
+  transition: box-shadow 0.18s;
+
+  &:hover {
+    box-shadow: $tpb-shadow-hover;
+  }
+}
+
+.tpb-card-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 14px 14px 12px;
+  background: #fff;
+  border-bottom: 1px solid $tpb-border;
+}
+
+.tpb-card-header-left {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.tpb-icon-field,
+.tpb-title-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tpb-title-field { flex: 1; }
+
+.tpb-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: $tpb-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// ─── Sub-tests ───────────────────────────────────────────────────────────────
+
+.tpb-subtests {
+  padding: 14px;
+  background: $tpb-bg-subtest;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tpb-sublabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: $tpb-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.tpb-subtest-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// ─── Chips ───────────────────────────────────────────────────────────────────
+
+.tpb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tpb-chips-empty {
+  font-size: 12px;
+  color: $tpb-text-faint;
+  font-style: italic;
+}
+
+.tpb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff;
+  border: 1.5px solid $tpb-primary-mid;
+  color: $tpb-primary;
+  border-radius: 20px;
+  padding: 4px 10px 4px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: $tpb-primary-light;
+    border-color: $tpb-primary;
+  }
+}
+
+.tpb-chip-text { line-height: 1; }
+
+.tpb-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: $tpb-text-muted;
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  transition: background 0.12s, color 0.12s;
+
+  &:hover {
+    background: $tpb-danger-light;
+    color: $tpb-danger;
+  }
+}
+
+// ─── List row ────────────────────────────────────────────────────────────────
+
+.tpb-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tpb-list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: $tpb-bg-card;
+  border: 1.5px solid $tpb-border;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    border-color: $tpb-primary-mid;
+    box-shadow: $tpb-shadow-hover;
+  }
+}
+
+.tpb-list-index {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: $tpb-primary-mid;
+  color: $tpb-primary;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// ─── Action buttons ──────────────────────────────────────────────────────────
+
+.tpb-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  border: 1.5px solid $tpb-primary;
+  background: $tpb-primary-light;
+  color: $tpb-primary;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    background: $tpb-primary;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  }
+}
+
+.tpb-add-card-btn,
+.tpb-add-list-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px dashed $tpb-primary-mid;
+  background: $tpb-primary-light;
+  color: $tpb-primary;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  margin-top: 4px;
+
+  &:hover {
+    border-color: $tpb-primary;
+    background: darken($tpb-primary-light, 2%);
+    box-shadow: $tpb-shadow-hover;
+  }
+
+  i { font-size: 15px; }
+}
+
+// ─── Delete button (trash) ───────────────────────────────────────────────────
+
+.tpb-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  border: 1.5px solid $tpb-border;
+  background: #fff;
+  color: $tpb-text-muted;
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+
+  &:hover {
+    border-color: $tpb-danger;
+    background: $tpb-danger-light;
+    color: $tpb-danger;
+  }
+}
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
+
+.tpb-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 16px;
+  border: 2px dashed $tpb-border;
+  border-radius: $tpb-radius;
+  text-align: center;
+  background: $tpb-bg-card;
+
+  p {
+    font-size: 13px;
+    color: $tpb-text-muted;
+    margin: 0;
+  }
+}
+
+.tpb-empty-icon {
+  font-size: 28px;
+  color: $tpb-primary-mid;
+}
+
+// ─── Validation message ──────────────────────────────────────────────────────
+
+.tpb-validation-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: $tpb-danger;
+  margin-top: 4px;
+
+  i { font-size: 13px; }
+}

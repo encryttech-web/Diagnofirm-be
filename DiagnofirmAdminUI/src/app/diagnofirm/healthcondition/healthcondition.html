@@ -1,0 +1,101 @@
+<div class="flex flex-col divcls">
+    <div class="card cardcls file-container">
+
+        <div class="table-container">
+
+            <p-table #dt1 [value]="gethealthconditionlist" dataKey="id" [rows]="10" [loading]="loading"
+                [rowHover]="true" [showGridlines]="true" [paginator]="true" scrollable="true" scrollHeight="70vh"
+                [globalFilterFields]="['hlthcndtn_code','hlthcndtn_name','hlthcndtn_desc','hlthcndtn_ord']"
+                (onFilter)="onFilter($event)" (onSort)="onSort($event)">
+
+                <ng-template #caption>
+                    <div class="table-toolbar">
+                        <!-- <h5 class="heading">subcategory Master</h5> -->
+                        <div class="search-container">
+
+                            <!-- <app-calenderview [defaultRange]="selectedRange" (dateRangeSelected)="onDateRangeSelected($event)"></app-calenderview> -->
+
+                            <button pButton label="Clear" class="p-button-outlined clear-button"
+                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                            <button pButton icon="pi pi-file-excel" class="export-btn"
+                                (click)="exportToExcel()"></button>
+
+                            <p-iconfield iconPosition="left">
+                                <p-inputicon>
+                                    <i class="pi pi-search"></i>
+                                </p-inputicon>
+                                <input pInputText type="text" [(ngModel)]="globalFilter"
+                                    (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
+                                <p-inputicon (click)="clearFilter(dt1)" *ngIf="filterApplied">
+                                    <i class="pi pi-times"></i>
+                                </p-inputicon>
+                            </p-iconfield>
+
+                            <!-- <button pButton icon="pi pi-file-excel" class="export-btn" (click)="exportToExcel()"></button> -->
+                            <p-button label="Add" class="btncls" (onClick)="openAdd()"></p-button>
+
+                        </div>
+                    </div>
+                </ng-template>
+
+                <!-- HEADER -->
+                <ng-template #header>
+                    <tr>
+
+                        <th *ngFor="let field of healthFields" pSortableColumn="{{field}}">
+                            {{ healthUiFields[healthFields.indexOf(field)] }}
+                            <p-sortIcon [field]="field"></p-sortIcon>
+
+                            <p-columnFilter [field]="field" matchMode="contains" type="text" display="menu"
+                                [showOperator]="false" [showMatchModes]="false" [showAddButton]="false">
+                            </p-columnFilter>
+                        </th>
+
+                        <th frozen="true" style="width:10rem; right:0; position:sticky;">
+                            Action
+                        </th>
+
+                    </tr>
+                </ng-template>
+
+                <!-- BODY -->
+                <ng-template #body let-row>
+                    <tr>
+
+                        <td *ngFor="let field of healthFields">
+                            {{ row[field] }}
+                        </td>
+
+                        <td frozen="true" style="width:10rem; right:0; position:sticky;">
+                            <p-button icon="pi pi-pen-to-square" severity="success" (onClick)="editHealth(row)" />
+                            &nbsp;
+                            <p-button icon="pi pi-trash" severity="danger" (onClick)="deleteHealth(row.id)" />
+                        </td>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template #emptymessage>
+                    <tr>
+                        <td colspan="5">No health conditions found.</td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+
+            <!-- ADD -->
+            <!-- <div *ngIf="addenable">
+        <app-addhealthcondition (dataReloaded)="onDataReloaded()"></app-addhealthcondition>
+      </div> -->
+
+            <!-- EDIT -->
+            <!-- <div *ngIf="editenable">
+        <app-edithealthcondition
+          [healthdata]="healthdata"
+          (editdisplayChange)="backToMain($event)">
+        </app-edithealthcondition>
+      </div> -->
+
+        </div>
+    </div>
+</div>

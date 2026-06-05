@@ -1,0 +1,29 @@
+<!-- fileupload.html -->
+
+<p-fileUpload
+    #fileUploader
+    mode="basic"
+    name="file"
+    [auto]="true"
+    chooseIcon="pi pi-upload"
+    chooseLabel="Choose File"
+    [customUpload]="true"
+    (onSelect)="onFileSelect($event)"
+    [multiple]="false">
+
+</p-fileUpload>
+
+<!-- FILE NAME VIEW -->
+<div class="mt-2" *ngIf="!Filecountenable">
+
+    <a (click)="viewFile()" class="file-link">
+        {{ filename }}
+    </a>
+
+    <button type="button"
+        class="remove-btn"
+        (click)="clearFile(fileUploader)">
+        ✖
+    </button>
+
+</div>

@@ -1,0 +1,54 @@
+{{with printf "kv/%s/%s/%s/%s/api/usrmgmnt-api" (env "PROJECT") (env "TYPE") (env "BRANCH") (env "PLANTID")| secret }}
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "ElasticConfiguration": {
+    "Uri": "{{.Data.data.EURL}}",
+    "Token": "{{.Data.data.EToken}}"
+  },
+  "Sentry": {
+    "Key": "{{.Data.data.SentryKey}}",
+    "OrganizationId": "{{.Data.data.SentryOrganizationId}}",
+    "ProjectId": "{{.Data.data.SentryProjectId}}"
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+  "LoginConnection": "{{.Data.data.LoginConnection}}"
+  },
+  "ApplicationSettings": {
+    "JWT_Secret": "{{.Data.data.JWT_Secret}}",
+    "Client_URL": "{{.Data.data.Client_URL}}",
+    "UAT_URL": "{{.Data.data.UAT_URL}}",
+    "APP_URL": "{{.Data.data.APP_URL}}",
+    "PathBase": "{{.Data.data.PathBase}}",
+    "Version": "{{.Data.data.Version}}",
+    "EUser": "{{.Data.data.EUser}}",
+    "EPass": "{{.Data.data.EPass}}",
+    "EURL": "{{.Data.data.EURL}}",
+    "CloudClientId": "{{.Data.data.CloudClientId}}",
+    "CloudClientSecret": "{{.Data.data.CloudClientSecret}}",
+    "FTPAddress": "{{.Data.data.FTPAddress}}",
+    "FTPUser": "{{.Data.data.FTPUser}}",
+    "FPass": "{{.Data.data.FPass}}",
+    "ADMIN_URL": "{{.Data.data.ADMIN_URL}}",
+    "CryptId": "{{.Data.data.CryptId}}",
+    "LogMethod": "{{.Data.data.LogMethod}}",
+    "AuthMode": "{{.Data.data.AuthMode}}",
+    "Env":  "{{.Data.data.Env}}",
+    "DOMAINLIST": "{{.Data.data.DOMAINLIST}}",
+    "FQDN": "{{.Data.data.FQDN}}"
+  },
+  "Oidc": {
+    "Authority": "{{.Data.data.Authority}}",
+    "ClientId": "{{.Data.data.ClientId}}",
+    "ClientSecret": "{{.Data.data.ClientSecret}}"
+  }
+} 
+{{end}}
+
+

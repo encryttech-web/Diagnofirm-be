@@ -1,0 +1,121 @@
+<p-dialog header="Add Test Directory" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '55vw'}" [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+  <ng-template pTemplate="header">
+    <span>
+      <h5>Add Test Directory</h5>
+    </span>
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM START -->
+  <form #testForm="ngForm" (ngSubmit)="addbtn(testForm)" novalidate>
+
+    <!-- FIRST BLOCK -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <div class="field">
+          <label>Testdirectory Code <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <span>{{ testdirectorycode }}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Test Code <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="testdirectoryhead" name="testdirectoryhead" required
+              maxlength="50" />
+          </div>
+          <div *ngIf="testForm.submitted && !testdirectoryhead" class="p-error">
+            Head Name is required.
+          </div>
+        </div>
+
+        <!-- Industry field — fix name binding -->
+        <div class="field">
+          <label for="industry">Industry <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-select [options]="gettestdirectoryindustryist" [(ngModel)]="industry" optionLabel="indust_name"
+              optionValue="id" placeholder="Select industry" name="industry" required> <!-- ✅ Add required -->
+            </p-select>
+          </div>
+          <div *ngIf="testForm.submitted && !industry" class="p-error">
+            Industry is required. <!-- ✅ Fix form reference -->
+          </div>
+        </div>
+
+
+        <div class="field">
+          <label>Testdirectory Name <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="testdirectoryname" name="testdirectoryname" required
+              maxlength="50" />
+          </div>
+          <div *ngIf="testForm.submitted && !testdirectoryname" class="p-error">
+            Name is required.
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <!-- <input pInputText type="text" [(ngModel)]="testdescription" name="testdescription" /> -->
+
+            <textarea pInputText [(ngModel)]="testdescription" name="testdescription"></textarea>
+          </div>
+        </div>
+
+        <!-- <div class="field">
+          <label>Specimen</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="specimen" name="specimen" maxlength="50" />
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+
+    <!-- SECOND BLOCK -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- <div class="field">
+          <label>Unit</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="unit" name="unit" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Ref Range</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="refrange" name="refrange" />
+          </div>
+        </div> -->
+
+
+
+        <!-- <div class="field">
+          <label>Order</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="testorder" name="testorder" />
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save" type="submit" [disabled]="!testForm.valid"></p-button>
+      <p-button label="Clear" (click)="clear()" class="custom-red-button"></p-button>
+    </div>
+
+  </form>
+  <!-- FORM END -->
+
+</p-dialog>

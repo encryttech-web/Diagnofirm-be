@@ -1,0 +1,236 @@
+<p-toast position="top-right"></p-toast>fa
+
+<div class="flex flex-col divcls">
+
+    <div class="card cardcls file-container">
+
+        <!-- ================= TABLE WRAPPER ================= -->
+        <div class="table-container">
+
+            <p-table #dt1
+                [value]="faqList"
+                dataKey="id"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                [showGridlines]="true"
+                [paginator]="true"
+                scrollable="true"
+                scrollHeight="70vh"
+                frozenWidth="12rem"
+                [globalFilterFields]="faqFields"
+                (onFilter)="onFilter($event)"
+                (onSort)="onSort($event)">
+
+                <!-- ================= CAPTION ================= -->
+                <ng-template #caption>
+
+                    <div class="table-toolbar">
+
+                        <div class="search-container">
+
+                            <!-- CLEAR -->
+                            <button pButton
+                                label="Clear"
+                                class="p-button-outlined clear-button"
+                                icon="pi pi-filter-slash"
+                                (click)="clear(dt1)">
+                            </button>
+
+                            <!-- EXPORT -->
+                            <button pButton
+                                icon="pi pi-file-excel"
+                                class="export-btn"
+                                (click)="exportToExcel()">
+                            </button>
+
+                            <!-- SEARCH -->
+                            <p-iconfield iconPosition="left">
+
+                                <p-inputicon>
+                                    <i class="pi pi-search"></i>
+                                </p-inputicon>
+
+                                <input pInputText
+                                    type="text"
+                                    [(ngModel)]="globalFilter"
+                                    (input)="onGlobalFilter(dt1, $event)"
+                                    placeholder="Search keyword" />
+
+                                <p-inputicon
+                                    *ngIf="filterApplied"
+                                    (click)="clearFilter(dt1)">
+
+                                    <i class="pi pi-times"></i>
+
+                                </p-inputicon>
+
+                            </p-iconfield>
+
+                            <!-- ADD BUTTON -->
+                            <p-button
+                                label="Add"
+                                class="btncls"
+                                (onClick)="openAddFaqDialog()">
+                            </p-button>
+
+                        </div>
+
+                    </div>
+
+                </ng-template>
+
+                <!-- ================= HEADER ================= -->
+                <ng-template #header>
+
+                    <tr>
+
+                        <th *ngFor="let field of faqFields"
+                            pSortableColumn="{{field}}"
+                            style="min-width:180px;">
+
+                            {{ faqUiFields[faqFields.indexOf(field)] }}
+
+                            <p-sortIcon [field]="field"></p-sortIcon>
+
+                            <p-columnFilter
+                                [field]="field"
+                                matchMode="contains"
+                                type="text"
+                                display="menu"
+                                [showOperator]="false"
+                                [showMatchModes]="false"
+                                [showAddButton]="false"
+                                placeholder="Search by {{faqUiFields[faqFields.indexOf(field)]}}">
+                            </p-columnFilter>
+
+                        </th>
+
+                        <!-- ACTION -->
+                        <th frozen="true"
+                            style="width:10rem; background:#f4f4f4; position:sticky; right:0;">
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </ng-template>
+
+                <!-- ================= BODY ================= -->
+                <ng-template #body let-faq>
+
+                    <tr>
+
+                        <!-- DYNAMIC COLUMNS -->
+                        <td *ngFor="let field of faqFields"
+                            style="min-width:180px;">
+
+                            <!-- STATUS -->
+                            <span *ngIf="field === 'is_active'">
+
+                                <span
+                                    [ngClass]="faq[field] == '1'
+                                    ? 'text-green-600 font-semibold'
+                                    : 'text-red-500 font-semibold'">
+
+                                    {{ faq[field] == '1' ? 'Active' : 'Inactive' }}
+
+                                </span>
+
+                            </span>
+
+                            <!-- NORMAL -->
+                            <span *ngIf="field !== 'is_active'">
+
+                                {{ faq[field] }}
+
+                            </span>
+
+                        </td>
+
+                        <!-- ACTION -->
+                        <td frozen="true"
+                            style="width:10rem; position:sticky; right:0; background:white;">
+
+                            <!-- EDIT -->
+                            <p-button
+                                severity="success"
+                                icon="pi pi-pen-to-square"
+                                (onClick)="editFaq(faq)">
+                            </p-button>
+
+                            &nbsp;
+
+                            <!-- DELETE -->
+                            <p-button
+                                severity="danger"
+                                icon="pi pi-trash"
+                                (onClick)="deleteFaq(faq.id)">
+                            </p-button>
+
+                        </td>
+
+                    </tr>
+
+                </ng-template>
+
+                <!-- ================= EMPTY ================= -->
+                <ng-template #emptymessage>
+
+                    <tr>
+
+                        <td colspan="20">
+
+                            No FAQ records found.
+
+                        </td>
+
+                    </tr>
+
+                </ng-template>
+
+                <!-- ================= LOADING ================= -->
+                <ng-template #loadingbody>
+
+                    <tr>
+
+                        <td colspan="20">
+
+                            Loading FAQ data. Please wait.
+
+                        </td>
+
+                    </tr>
+
+                </ng-template>
+
+            </p-table>
+
+            <!-- ================= ADD FAQ ================= -->
+            <div *ngIf="addenable">
+
+                <app-addfaq
+                    [display]="display"
+                    (dataReloaded)="onDataReloaded()">
+                </app-addfaq>
+
+            </div>
+
+            <!-- ================= EDIT FAQ ================= -->
+            <div *ngIf="editenable">
+
+                <app-editfaq
+                    [editdisplayfaq]="editdisplayfaq"
+                    [faqdata]="faqdata"
+                    (editdisplayChange)="backtomainChange($event)">
+                </app-editfaq>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

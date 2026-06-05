@@ -1,0 +1,193 @@
+<p-dialog header="Add Contact" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '60vw'}"
+  [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+  <ng-template pTemplate="header">
+    <span>
+      <h5>Add Contact</h5>
+    </span>
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM START -->
+  <form #contactForm="ngForm" (ngSubmit)="addbtn(contactForm)" novalidate>
+
+    <!-- Block 1: Core Info -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- cont_type -->
+        <div class="field">
+          <label for="conttype">Contact Type <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-select [options]="contacttypelist" [(ngModel)]="conttype" optionLabel="conttyp_name"
+              placeholder="Select Contact Type" name="conttype" required>
+            </p-select>
+            <!-- <input pInputText id="conttype" type="text" [(ngModel)]="conttype" name="conttype" required
+              autocomplete="off" maxlength="100" /> -->
+          </div>
+          <div *ngIf="contactForm.submitted && !conttype" class="p-error">Contact Type is required.</div>
+        </div>
+
+        <!-- cont_name -->
+        <div class="field">
+          <label for="contname">Contact Name <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contname" type="text" [(ngModel)]="contname" name="contname" required
+              autocomplete="off" maxlength="100" />
+          </div>
+          <div *ngIf="contactForm.submitted && !contname" class="p-error">Contact Name is required.</div>
+        </div>
+
+        <!-- cont_email -->
+        <div class="field">
+          <label for="contemail">Email <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contemail" type="email" [(ngModel)]="contemail" name="contemail" required
+              autocomplete="off" maxlength="100" />
+          </div>
+          <div *ngIf="contactForm.submitted && !contemail" class="p-error">Email is required.</div>
+        </div>
+
+        <!-- cont_phno -->
+        <div class="field">
+          <label for="contphno">Phone Number <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contphno" type="text" [(ngModel)]="contphno" name="contphno" required
+              autocomplete="off" maxlength="15" />
+          </div>
+          <div *ngIf="contactForm.submitted && !contphno" class="p-error">Phone Number is required.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Block 2: Address Info -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- cont_altphno -->
+        <div class="field">
+          <label for="contaltphno">Alternate Phone Number</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contaltphno" type="text" [(ngModel)]="contaltphno" name="contaltphno"
+              autocomplete="off" maxlength="15" />
+          </div>
+        </div>
+
+        <!-- cont_address -->
+        <div class="field">
+          <label for="contaddress">Address</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputText rows="3" [(ngModel)]="contaddress" name="contaddress" maxlength="255"></textarea>
+          </div>
+        </div>
+
+        <!-- cont_city -->
+        <div class="field">
+          <label for="contcity">City</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contcity" type="text" [(ngModel)]="contcity" name="contcity" autocomplete="off"
+              maxlength="100" />
+          </div>
+        </div>
+
+        <!-- cont_state -->
+        <div class="field">
+          <label for="contstate">State</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contstate" type="text" [(ngModel)]="contstate" name="contstate" autocomplete="off"
+              maxlength="100" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Block 3: Working Hours & Other Info -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- cont_country -->
+        <div class="field">
+          <label for="contcountry">Country</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contcountry" type="text" [(ngModel)]="contcountry" name="contcountry"
+              autocomplete="off" maxlength="100" />
+          </div>
+        </div>
+
+        <!-- cont_wrkhrs1 -->
+        <div class="field">
+          <label for="contwrkhrs1">Working Hours (Slot 1)</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contwrkhrs1" type="text" [(ngModel)]="contwrkhrs1" name="contwrkhrs1"
+              autocomplete="off" maxlength="50" placeholder="e.g. Mon-Fri 09:00-17:00" />
+          </div>
+        </div>
+
+        <!-- cont_wrkhrs2 -->
+        <div class="field">
+          <label for="contwrkhrs2">Working Hours (Slot 2)</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contwrkhrs2" type="text" [(ngModel)]="contwrkhrs2" name="contwrkhrs2"
+              autocomplete="off" maxlength="50" placeholder="e.g. Sat 09:00-13:00" />
+          </div>
+        </div>
+
+        <!-- cont_wrkhrs3 -->
+        <div class="field">
+          <label for="contwrkhrs3">Working Hours (Slot 3)</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contwrkhrs3" type="text" [(ngModel)]="contwrkhrs3" name="contwrkhrs3"
+              autocomplete="off" maxlength="50" placeholder="e.g. Sun Closed" />
+          </div>
+        </div>
+
+        <!-- cont_ord -->
+        <!-- <div class="field">
+          <label for="contord">Display Order</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText id="contord" type="number" [(ngModel)]="contord" name="contord"
+              autocomplete="off" />
+          </div>
+        </div> -->
+
+        <!-- cont_dircts -->
+        <div class="field">
+          <label for="contdircts">Directions</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputText rows="3" [(ngModel)]="contdircts" name="contdircts"></textarea>
+          </div>
+        </div>
+
+        <!-- cont_desc -->
+        <!-- <div class="field">
+          <label for="contdesc">Description</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputText rows="3" [(ngModel)]="contdesc" name="contdesc" maxlength="255"></textarea>
+          </div>
+        </div> -->
+
+        <!-- head office -->
+        <div class="field">
+          <label for="status">Head office check</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-toggleswitch [(ngModel)]="checked" name="checked"></p-toggleswitch>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save" type="submit"></p-button>
+      <p-button label="Clear" (click)="clear()" class="custom-red-button" />
+    </div>
+
+  </form>
+  <!-- FORM END -->
+
+</p-dialog>

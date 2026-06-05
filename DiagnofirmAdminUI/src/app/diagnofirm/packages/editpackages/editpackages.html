@@ -1,0 +1,357 @@
+<div class="flex flex-col md:flex-row gap-8">
+  <div class="md:w-1/2">
+    <div class="card">
+
+      <p-dialog header="Edit Package" [(visible)]="editdisplaypackages" [breakpoints]="{ '960px': '75vw' }"
+        [style]="{ width: '55vw'}" [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+        <!-- HEADER -->
+        <ng-template pTemplate="header">
+          <span>
+            <h5>Edit Package</h5>
+          </span>
+
+          <a class="close-button" (click)="close()">
+            <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+          </a>
+        </ng-template>
+
+        <!-- FORM START -->
+        <form #packageForm="ngForm" (ngSubmit)="editbtn(packageForm)" novalidate>
+
+          <!-- BLOCK 1 -->
+          <div class="card flex flex-col gap-4 cardflx">
+            <div class="flex flex-wrap items-start gap-6">
+
+              <!-- PACKAGE CODE -->
+              <div class="field">
+                <label>Package Code <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <span>{{ packg_code }}</span>
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_code">
+                  Package Code is required
+                </small>
+              </div>
+
+              <!-- PACKAGE HEAD -->
+              <div class="field">
+                <label>Package Head <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText type="text" [(ngModel)]="packg_headname" name="packg_headname"
+                    maxlength="200" required />
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_headname">
+                  Package Head is required
+                </small>
+              </div>
+
+              <!-- PACKAGE NAME -->
+              <div class="field">
+                <label>Package Name <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText type="text" [(ngModel)]="packg_name" name="packg_name"
+                    maxlength="50" required />
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_name">
+                  Package Name is required
+                </small>
+              </div>
+
+              <!-- SAMPLE TYPE -->
+              <div class="field">
+                <label>Sample Type <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText type="text" [(ngModel)]="packg_samptyp" name="packg_samptyp"
+                    maxlength="50" required />
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_samptyp">
+                  Sample Type is required
+                </small>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- BLOCK 2 -->
+          <div class="card flex flex-col gap-4 cardflx">
+            <div class="flex flex-wrap items-start gap-6">
+
+              <!-- GENDER -->
+              <div class="field">
+                <label>Gender <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <p-select [options]="genderOptions" [(ngModel)]="packg_gender" optionLabel="label"
+                    optionValue="value" name="packg_gender" placeholder="Select Gender">
+                  </p-select>
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_gender">
+                  Gender is required
+                </small>
+              </div>
+
+              <!-- PRICE -->
+              <div class="field">
+                <label>Package Price <span class="text-red-500">*</span></label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <input pInputText type="number" [(ngModel)]="packg_price" name="packg_price" required />
+                </div>
+                <small class="p-error" *ngIf="packageForm.submitted && !packg_price">
+                  Package Price is required
+                </small>
+              </div>
+
+              <!-- IMAGE -->
+              <div class="field">
+                <div *ngIf="deleteenable">
+                  <div class="row">
+                    <div class="col-4">
+                      <label>Image <span class="text-red-500">*</span></label>
+                    </div>
+                    <div class="col-8">
+                      <a class="valcls" (click)="imageview()">
+                        {{ imagename }}
+                        <button cButtonClose class="btnimgcls">
+                          <i class="pi pi-times close-btn" (click)="deleteenablebtn()"></i>
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="!deleteenable">
+                  <label>Image <span class="text-red-500">*</span></label>
+                  <div class="flex flex-wrap gap-2 textcls">
+                    <app-imageupload (eventName)="someMethod($event)"></app-imageupload>
+                  </div>
+                </div>
+
+                <div *ngIf="visibleImageView && images">
+                  <app-imageview [visible]="visibleImageView" [images]="images"></app-imageview>
+                </div>
+              </div>
+
+              <!-- DESCRIPTION -->
+              <div class="field">
+                <label>Package Description</label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <textarea pInputText id="packg_desc" type="text" [(ngModel)]="packg_desc"
+                    name="packg_desc" autocomplete="off"></textarea>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════════════ -->
+          <!-- BLOCK 3: TEST PARAMETERS BUILDER                                   -->
+          <!-- ═══════════════════════════════════════════════════════════════════ -->
+          <div class="card cardflx tpb-wrapper">
+
+            <!-- Section Header -->
+            <div class="tpb-section-header">
+              <div class="tpb-section-title">
+                <i class="pi pi-list-check tpb-section-icon"></i>
+                <span>Test Parameters <span class="tpb-required">*</span></span>
+              </div>
+            </div>
+
+            <!-- ── Format Radio Toggle ── -->
+            <div class="tpb-format-toggle">
+
+              <label class="tpb-radio-card" [class.tpb-radio-card--active]="testParamFormat === 'card'">
+                <input type="radio" name="testParamFormat" value="card"
+                  [(ngModel)]="testParamFormat"
+                  (ngModelChange)="onFormatChange($event)" />
+                <span class="tpb-radio-icon">
+                  <i class="pi pi-th-large"></i>
+                </span>
+                <span class="tpb-radio-content">
+                  <strong>Card Format</strong>
+                  <small>Group tests by category with icons</small>
+                </span>
+                <span class="tpb-radio-check">
+                  <i class="pi pi-check-circle"></i>
+                </span>
+              </label>
+
+              <label class="tpb-radio-card" [class.tpb-radio-card--active]="testParamFormat === 'list'">
+                <input type="radio" name="testParamFormat" value="list"
+                  [(ngModel)]="testParamFormat"
+                  (ngModelChange)="onFormatChange($event)" />
+                <span class="tpb-radio-icon">
+                  <i class="pi pi-align-justify"></i>
+                </span>
+                <span class="tpb-radio-content">
+                  <strong>List Format</strong>
+                  <small>Simple list with prices</small>
+                </span>
+                <span class="tpb-radio-check">
+                  <i class="pi pi-check-circle"></i>
+                </span>
+              </label>
+
+            </div>
+
+            <!-- ─────────────────────────────── CARD FORMAT ─────────────────────── -->
+            <div *ngIf="testParamFormat === 'card'" class="tpb-body">
+
+              <div *ngFor="let cat of testParamCards; let ci = index" class="tpb-card">
+
+                <!-- Card Header -->
+                <div class="tpb-card-header">
+                  <div class="tpb-card-header-left">
+                    <div class="tpb-icon-field">
+                      <span class="tpb-field-label">Icon</span>
+                      <input pInputText class="tpb-input tpb-input--icon"
+                        [(ngModel)]="cat.icon" [name]="'cat_icon_' + ci"
+                        placeholder="e.g. 🫀 or pi pi-heart" />
+                    </div>
+                    <div class="tpb-title-field">
+                      <span class="tpb-field-label">Category Title</span>
+                      <input pInputText class="tpb-input tpb-input--title"
+                        [(ngModel)]="cat.title" [name]="'cat_title_' + ci"
+                        placeholder="e.g. Kidney, Liver, CBC…" />
+                    </div>
+                  </div>
+                  <button type="button" class="tpb-delete-btn" (click)="removeTestParamCard(ci)"
+                    title="Remove category">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+
+                <!-- Sub-tests Area -->
+                <div class="tpb-subtests">
+                  <span class="tpb-sublabel">Sub-tests</span>
+
+                  <!-- Chips -->
+                  <div *ngIf="cat.subTests.length > 0" class="tpb-chips">
+                    <span *ngFor="let sub of cat.subTests; let si = index" class="tpb-chip">
+                      <span class="tpb-chip-text">{{ sub }}</span>
+                      <button type="button" class="tpb-chip-remove" (click)="removeSubTest(ci, si)"
+                        title="Remove">
+                        <i class="pi pi-times"></i>
+                      </button>
+                    </span>
+                  </div>
+
+                  <!-- Add Input Row -->
+                  <div class="tpb-subtest-row">
+                    <input pInputText class="tpb-input tpb-input--subtest"
+                      [(ngModel)]="cat.newSubTest" [name]="'cat_newsub_' + ci"
+                      placeholder="Type sub-test name and press Enter or + Add"
+                      [class.ng-invalid]="cat.subTestError"
+                      (input)="clearSubTestError(ci)"
+                      (keydown.enter)="$event.preventDefault(); addSubTest(ci)" />
+                    <button type="button" class="tpb-add-btn"
+                      [disabled]="!cat.newSubTest?.trim()"
+                      (click)="addSubTest(ci)">
+                      <i class="pi pi-plus"></i> Add
+                    </button>
+                  </div>
+
+                  <!-- Inline sub-test error -->
+                  <div *ngIf="cat.subTestError" class="tpb-subtest-error">
+                    <i class="pi pi-exclamation-circle"></i>
+                    {{ cat.subTestError }}
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Add Category CTA -->
+              <button type="button" class="tpb-add-card-btn" (click)="addTestParamCard()">
+                <i class="pi pi-plus-circle"></i>
+                Add Category Card
+              </button>
+
+              <!-- Submit-time: no cards at all -->
+              <div *ngIf="packageForm.submitted && testParamCards.length === 0" class="tpb-validation-msg">
+                <i class="pi pi-exclamation-circle"></i>
+                At least one test parameter category is required.
+              </div>
+
+              <!-- Submit-time: per-card missing title / sub-tests -->
+              <ng-container *ngIf="packageForm.submitted && testParamCards.length > 0">
+                <div *ngFor="let cat of testParamCards; let ci = index">
+                  <div *ngIf="!cat.title.trim()" class="tpb-validation-msg">
+                    <i class="pi pi-exclamation-circle"></i>
+                    Category {{ ci + 1 }}: Title is required.
+                  </div>
+                  <div *ngIf="cat.title.trim() && cat.subTests.length === 0" class="tpb-validation-msg">
+                    <i class="pi pi-exclamation-circle"></i>
+                    Category {{ ci + 1 }} ("{{ cat.title }}"): add at least one sub-test.
+                  </div>
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- ─────────────────────────────── LIST FORMAT ─────────────────────── -->
+            <div *ngIf="testParamFormat === 'list'" class="tpb-body">
+
+              <div class="tpb-list-container">
+                <div *ngFor="let item of testParamList; let li = index" class="tpb-list-row">
+                  <span class="tpb-list-index">{{ li + 1 }}</span>
+                  <input pInputText class="tpb-input tpb-input--listitem"
+                    [(ngModel)]="item.value" [name]="'list_item_' + li"
+                    placeholder="e.g. Full Blood Count (FBC) — ₱106.20" />
+                  <button type="button" class="tpb-delete-btn" (click)="removeTestParamListItem(li)"
+                    title="Remove item">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="tpb-add-list-btn" (click)="addTestParamListItem()">
+                <i class="pi pi-plus-circle"></i>
+                Add Item
+              </button>
+
+              <div *ngIf="packageForm.submitted && testParamList.length === 0" class="tpb-validation-msg">
+                <i class="pi pi-exclamation-circle"></i>
+                At least one test parameter is required.
+              </div>
+
+            </div>
+
+          </div>
+          <!-- END BLOCK 3 -->
+
+          <!-- BLOCK 4 -->
+          <div class="card flex flex-col gap-4 cardflx">
+            <div class="flex flex-wrap items-start gap-6">
+
+              <!-- FACTS -->
+              <div class="field">
+                <label>Package Facts</label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <textarea pInputText id="packg_facts" type="text" [(ngModel)]="packg_facts"
+                    name="packg_facts" autocomplete="off"></textarea>
+                </div>
+              </div>
+
+              <!-- STATUS -->
+              <!-- <div class="field">
+                <label>Status</label>
+                <div class="flex flex-wrap gap-2 textcls">
+                  <p-toggleswitch [(ngModel)]="is_active" name="is_active"></p-toggleswitch>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="space-x-4 footercls">
+            <p-button label="Save" type="submit"></p-button>
+            <p-button label="Clear" (click)="clear()" class="custom-red-button"></p-button>
+          </div>
+
+        </form>
+
+      </p-dialog>
+
+    </div>
+  </div>
+</div>

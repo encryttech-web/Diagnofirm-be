@@ -1,0 +1,168 @@
+<p-dialog header="Add Product" [(visible)]="display" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '55vw'}"
+  [modal]="true" [closable]="false" [closeOnEscape]="false">
+
+  <!-- HEADER -->
+  <ng-template pTemplate="header">
+    <span><h5>Add Product</h5></span>
+    <a class="close-button" (click)="close()">
+      <i class="pi pi-times iconcls" style="cursor: pointer;"></i>
+    </a>
+  </ng-template>
+
+  <!-- FORM START -->
+  <form #productForm="ngForm" (ngSubmit)="addbtn(productForm)" novalidate>
+
+    <!-- BLOCK 1 -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- PRODUCT CODE -->
+        <div class="field">
+          <label>Product Code <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <span>{{ prod_code }}</span>
+          </div>
+          <div *ngIf="productForm.submitted && !prod_code" class="p-error">
+            Product Code is required
+          </div>
+        </div>
+
+        <!-- CATEGORY -->
+        <div class="field">
+          <label>Category <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-select
+              [options]="getcategoryist"
+              [(ngModel)]="category"
+              optionLabel="categoryname"
+              optionValue="id"
+              name="category"
+              placeholder="Select Category"
+              required
+              (onChange)="onCategoryChange($event)">
+            </p-select>
+          </div>
+          <div *ngIf="productForm.submitted && !category" class="p-error">
+            Category is required
+          </div>
+        </div>
+
+        <!-- SUBCATEGORY -->
+        <div class="field">
+          <label>Subcategory <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <p-multiSelect
+              [options]="getsubcategoryist"
+              [(ngModel)]="subcategory"
+              optionLabel="subcategoryname"
+              optionValue="id"
+              name="subcategory"
+              display="chip"
+              placeholder="Select Subcategory"
+              required>
+            </p-multiSelect>
+          </div>
+          <div *ngIf="productForm.submitted && (!subcategory || subcategory.length === 0)" class="p-error">
+            Subcategory is required
+          </div>
+        </div>
+
+        <!-- PRODUCT HEAD -->
+        <div class="field">
+          <label>Product Head <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="prod_headname" name="prod_headname" maxlength="200" required />
+          </div>
+          <div *ngIf="productForm.submitted && !prod_headname" class="p-error">
+            Product Head is required
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="card flex flex-col gap-4 cardflx">
+      <div class="flex flex-wrap items-start gap-6">
+
+        <!-- PRODUCT NAME -->
+        <div class="field">
+          <label>Product Name <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="text" [(ngModel)]="prod_name" name="prod_name" maxlength="50" required />
+          </div>
+          <div *ngIf="productForm.submitted && !prod_name" class="p-error">
+            Product Name is required
+          </div>
+        </div>
+
+        <!-- PRODUCT PRICE -->
+        <div class="field">
+          <label>Product Price <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <input pInputText type="number" [(ngModel)]="prod_price" name="prod_price" required />
+          </div>
+          <div *ngIf="productForm.submitted && !prod_price" class="p-error">
+            Product Price is required
+          </div>
+        </div>
+
+        <!-- PRODUCT DESCRIPTION -->
+        <div class="field">
+          <label>Product Description</label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <textarea pInputText [(ngModel)]="prod_desc" name="prod_desc" ></textarea>
+          </div>
+        </div>
+
+        <!-- IMAGE — mandatory only when prod_grpcod is filled -->
+        <div class="field">
+          <label>
+            Image
+            <span *ngIf="isImageRequired()" class="text-red-500">*</span>
+            <span *ngIf="!isImageRequired()" class="text-500 text-sm">(optional)</span>
+          </label>
+          <div class="flex flex-wrap gap-2 textcls">
+            <app-imageupload (eventName)="someMethod($event)"></app-imageupload>
+          </div>
+          <div *ngIf="productForm.submitted && isImageRequired() && !imageFileval?.length" class="p-error">
+            Image is required when Product Group Code is provided
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="card flex flex-col gap-4 cardflx">
+
+      <!-- GROUP CODE -->
+      <div class="field">
+        <label>Product Group</label>
+        <div class="flex flex-wrap gap-2 textcls">
+          <textarea
+            pInputText
+            id="prod_grpcod"
+            [(ngModel)]="prod_grpcod"
+            name="prod_grpcod"
+            autocomplete="off"
+            (ngModelChange)="onGroupCodeChange()">
+          </textarea>
+        </div>
+        <!-- hint so user understands the image rule -->
+        <!-- <small *ngIf="prod_grpcod?.trim()" class="text-orange-500">
+          ⚠ Image is required because a Product Group Code is entered.
+        </small> -->
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="space-x-4 footercls">
+      <p-button label="Save" type="submit"></p-button>
+      <p-button label="Clear" (click)="clear()" class="custom-red-button"></p-button>
+    </div>
+
+  </form>
+
+</p-dialog>
